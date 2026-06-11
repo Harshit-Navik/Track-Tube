@@ -1,0 +1,223 @@
+#progress-tube-root {
+  display: none;
+}
+
+/* Enable relative positioning on YouTube playlist video row renderers */
+ytd-playlist-video-renderer,
+ytd-playlist-panel-video-renderer {
+  position: relative !important;
+}
+
+/* Ensure playlist text details do not overlap with our absolute positioned progress icons */
+ytd-playlist-video-renderer #meta,
+ytd-playlist-panel-video-renderer #meta,
+ytd-playlist-video-renderer .meta,
+ytd-playlist-panel-video-renderer .meta {
+  padding-right: 130px !important;
+}
+
+/* Hide non-matching elements when a filter is active */
+body[data-progress-tube-active-filter="completed"] ytd-playlist-video-renderer:not([data-progress-tube-completed="true"]),
+body[data-progress-tube-active-filter="completed"] ytd-playlist-panel-video-renderer:not([data-progress-tube-completed="true"]) {
+  display: none !important;
+}
+
+body[data-progress-tube-active-filter="important"] ytd-playlist-video-renderer:not([data-progress-tube-important="true"]),
+body[data-progress-tube-active-filter="important"] ytd-playlist-panel-video-renderer:not([data-progress-tube-important="true"]) {
+  display: none !important;
+}
+
+body[data-progress-tube-active-filter="revisit"] ytd-playlist-video-renderer:not([data-progress-tube-revisit="true"]),
+body[data-progress-tube-active-filter="revisit"] ytd-playlist-panel-video-renderer:not([data-progress-tube-revisit="true"]) {
+  display: none !important;
+}
+
+/* Video Mount and Controls Layout */
+.progress-tube-mount {
+  box-sizing: border-box;
+}
+
+/* Absolutely position controls to sit inline right next to the native three-dot menu button */
+.progress-tube-video-mount {
+  position: absolute !important;
+  right: 56px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  z-index: 10 !important;
+}
+
+/* Controls container layout - always visible as requested */
+.progress-tube-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Individual status toggle buttons */
+.progress-tube-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: rgba(0, 0, 0, 0.25); /* Subtle grayscale default color in light mode */
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+html[dark] .progress-tube-toggle,
+html[dark-theme] .progress-tube-toggle,
+ytd-app[dark] .progress-tube-toggle {
+  color: rgba(255, 255, 255, 0.25); /* Subtle grayscale default color in dark mode */
+}
+
+/* Hover style matches Watch Later / native buttons */
+.progress-tube-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #0f0f0f;
+}
+
+html[dark] .progress-tube-toggle:hover,
+html[dark-theme] .progress-tube-toggle:hover,
+ytd-app[dark] .progress-tube-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f1f1f1;
+}
+
+.progress-tube-toggle svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Active Highlight Styling (multiple options can be active simultaneously) */
+
+/* 1. Completed State (checkmark) */
+.progress-tube-toggle.completed[aria-pressed="true"] {
+  color: #2ba640 !important; /* Subtle YouTube success green */
+}
+
+/* 2. Important State (bookmark) */
+.progress-tube-toggle.important[aria-pressed="true"] {
+  color: #0f0f0f !important;
+}
+html[dark] .progress-tube-toggle.important[aria-pressed="true"],
+html[dark-theme] .progress-tube-toggle.important[aria-pressed="true"],
+ytd-app[dark] .progress-tube-toggle.important[aria-pressed="true"] {
+  color: #f1f1f1 !important;
+}
+
+/* 3. Revisit State (refresh/circular arrow) */
+.progress-tube-toggle.revisit[aria-pressed="true"] {
+  color: #a855f7 !important; /* Subtle muted purple highlight */
+}
+
+/* Filter Chips and Stats Container Styling */
+.progress-tube-stats-mount {
+  display: block;
+  width: 100%;
+}
+
+.progress-tube-header-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 4px 0 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 12px;
+}
+
+html[dark] .progress-tube-header-container,
+html[dark-theme] .progress-tube-header-container,
+ytd-app[dark] .progress-tube-header-container {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.progress-tube-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 0;
+  align-items: center;
+}
+
+/* Individual Filter Chips */
+.progress-tube-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #0f0f0f;
+  transition: background-color 150ms cubic-bezier(0.05, 0, 0, 1),
+              color 150ms cubic-bezier(0.05, 0, 0, 1);
+  outline: none;
+}
+
+.progress-tube-chip:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.progress-tube-chip.active {
+  background-color: #0f0f0f;
+  color: #ffffff;
+}
+
+/* Dark theme topic chips */
+html[dark] .progress-tube-chip,
+html[dark-theme] .progress-tube-chip,
+ytd-app[dark] .progress-tube-chip {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f1f1f1;
+}
+
+html[dark] .progress-tube-chip:hover,
+html[dark-theme] .progress-tube-chip:hover,
+ytd-app[dark] .progress-tube-chip:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+html[dark] .progress-tube-chip.active,
+html[dark-theme] .progress-tube-chip.active,
+ytd-app[dark] .progress-tube-chip.active {
+  background-color: #f1f1f1;
+  color: #0f0f0f;
+}
+
+/* Stats Metadata Summary line styling */
+.progress-tube-stats-summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 12px;
+  color: #606060;
+  margin-top: 6px;
+}
+
+html[dark] .progress-tube-stats-summary,
+html[dark-theme] .progress-tube-stats-summary,
+ytd-app[dark] .progress-tube-stats-summary {
+  color: #aaa;
+}
+
+.progress-tube-stats-summary .separator {
+  opacity: 0.7;
+  margin: 0 2px;
+}

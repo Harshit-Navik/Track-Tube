@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "progress-tube",
+  "version": "0.1.0",
+  "description": "Track learning progress across YouTube playlists.",
+  "permissions": ["storage"],
+  "host_permissions": ["https://www.youtube.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"],
+      "css": ["assets/index.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
