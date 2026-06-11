@@ -1,185 +1,218 @@
-# LearnTrack
+# Progress-Tube
 
-LearnTrack is the YouTube playlist integration provided by the Progress-Tube Chrome extension. It helps learners track which playlist videos they have completed, which are important, and which they want to revisit.
+> Track learning progress across YouTube playlists — designed to feel like a native YouTube feature.
 
-It exists to make long educational playlists easier to manage without replacing YouTube's existing interface.
+Progress-Tube is a Chrome extension that integrates seamlessly into YouTube's playlist UI. It lets you mark videos as **Completed**, **Important**, or **Revisit**, filter your playlist by those states, and see live progress counts — all without disrupting YouTube's look and feel.
+
+---
+
+## ✨ Highlights
+
+- **Native YouTube Design** — Follows YouTube's Material Design 3 language. Icon buttons, chip filters, and stats match YouTube's own UI so closely the feature feels first-party.
+- **Always-visible SVG badges** — Three subtle icon buttons (✓ bookmark ↺) sit right next to the three-dot menu on every video row. Inactive icons are ghost-faint; active icons light up with their status colour.
+- **Multi-select statuses** — A video can be Completed *and* Important *and* Revisit at the same time.
+- **Live playlist stats** — A compact summary line below the filter chips shows total, completed, important, and revisit counts and updates instantly as you toggle badges.
+- **One-click filtering** — YouTube-style topic chips (**All · Completed · Important · Revisit**) filter the playlist instantly using pure CSS — no re-renders, no flicker.
+- **Auto-completion** — Videos are automatically marked Completed after reaching 90 % watch progress.
+- **100 % local storage** — All data lives in `chrome.storage.local`. No account, no server, no analytics.
+
+---
 
 ## Features
 
-- Mark playlist videos as **Completed**.
-- Mark playlist videos as **Important**.
-- Mark playlist videos as **Revisit**.
-- Automatically mark videos as Completed after reaching 90% watch progress.
-- View Total, Completed, Important, and Revisit playlist statistics.
-- Store all progress locally in the browser.
-- Use progress controls directly within YouTube playlists.
+| Feature | Description |
+|---|---|
+| ✅ Completed badge | Mark a video as watched / done. Auto-set at 90 % progress. Green checkmark. |
+| 🔖 Important badge | Bookmark key videos for reference. Filled bookmark icon when active. |
+| ↺ Revisit badge | Flag videos you want to watch again. Purple refresh icon when active. |
+| Multi-select | Any combination of the three statuses can be active on the same video. |
+| Filter chips | Instantly filter the playlist to show only Completed / Important / Revisit videos. |
+| Live stats | Header line: `N videos • N completed • N important • N revisit` — always up to date. |
+| Auto-complete | Watch progress tracked continuously; video marked Completed at 90 %. |
+| Local storage | Progress persists in the browser across sessions. No sync, no cloud. |
+
+---
 
 ## Installation
 
 ### Chrome Web Store
 
-[Chrome Web Store Link]
+*[Chrome Web Store link — coming soon]*
 
-1. Open the Chrome Web Store link above.
-2. Click **Add to Chrome**.
-3. Confirm the installation when Chrome asks for permission.
-4. Open a YouTube playlist.
+### Manual (Developer Mode)
 
-### Manual Installation
-
-Use this method to install Progress-Tube from a GitHub release.
-
-1. Download the extension package from [GitHub Release Link].
-2. Extract the downloaded archive to a folder.
+1. Download or clone this repository.
+2. Run the production build:
+   ```bash
+   npm install
+   npm run build
+   ```
 3. Open `chrome://extensions` in Chrome.
-4. Enable **Developer mode** using the switch in the top-right corner.
-5. Click **Load unpacked**.
-6. Select the extracted extension folder.
-7. Open a YouTube playlist.
+4. Enable **Developer mode** (top-right toggle).
+5. Click **Load unpacked** and select the `dist/` folder.
+6. Open any YouTube playlist.
 
-Keep the extracted folder after installation. Chrome uses files from that folder to run the extension.
+> Keep the `dist/` folder in place after loading — Chrome reads from it at runtime.
+
+---
 
 ## How to Use
 
-### Marking Videos
+### Badges
 
-Each video in a YouTube playlist includes three controls:
+Every playlist video row shows three small icon buttons to the left of the three-dot menu:
 
-- Select **C** to mark or unmark the video as Completed.
-- Select **I** to mark or unmark the video as Important.
-- Select **R** to mark or unmark the video as Revisit.
+| Icon | Action |
+|---|---|
+| **✓** (checkmark) | Toggle **Completed** |
+| **🔖** (bookmark) | Toggle **Important** |
+| **↺** (refresh arrow) | Toggle **Revisit** |
 
-A video can have more than one status at the same time.
+- Inactive badges appear as faint ghost icons so they don't clutter the row.
+- Active badges are highlighted (green / white / purple).
+- Multiple badges can be active on the same video simultaneously.
+- Clicking an active badge again deactivates it.
 
-### Automatic Completion
+### Filter Chips
 
-Progress-Tube automatically marks a video as Completed when its watch progress reaches 90%.
+A row of chips appears directly below the playlist title:
 
-You can still manually mark or unmark the Completed status at any time.
+```
+[ All ]  [ Completed ]  [ Important ]  [ Revisit ]
+```
 
-### Playlist Statistics
+Click any chip to instantly show only videos with that status. Click **All** to return to the full list.
 
-The playlist statistics show:
+### Stats Summary
 
-- **Total:** The number of videos in the playlist.
-- **Completed:** The number of videos marked as Completed.
-- **Important:** The number of videos marked as Important.
-- **Revisit:** The number of videos marked as Revisit.
+A compact line sits between the playlist controls and the filter chips:
 
-## How It Works
+```
+26 videos  •  12 completed  •  4 important  •  2 revisit
+```
 
-LearnTrack runs directly inside YouTube playlist pages and adds progress controls to the existing playlist interface. Statuses are attached to individual playlist videos using their YouTube video IDs.
+Counts update in real time as you toggle badges.
 
-All progress data is stored locally in your browser. No account is required, and no data is sent to external servers.
+### Auto-Completion
+
+Progress-Tube tracks playback position continuously. When a video reaches **90 % of its duration** it is automatically marked Completed. You can manually toggle Completed at any time.
+
+---
 
 ## Privacy
 
-- No account is required.
-- No analytics are collected.
-- No browsing activity is tracked.
-- No cloud storage is used.
-- No external servers receive your data.
-- Progress data remains in `chrome.storage.local` on your device.
+- No account required.
+- No analytics collected.
+- No external network requests.
+- All data stored locally via `chrome.storage.local`.
+- Uninstalling the extension or clearing its browser data will permanently remove saved progress.
 
-Removing the extension or clearing its stored browser data may permanently remove your saved progress.
+---
 
 ## Tech Stack
 
-- **React:** Builds and updates the controls shown inside YouTube playlists.
-- **TypeScript:** Adds type checking to help prevent code errors.
-- **Vite:** Runs the development build and creates production files.
-- **Chrome Extensions Manifest V3:** Defines how the extension runs in Chrome-compatible browsers.
-- **chrome.storage.local:** Stores playlist progress locally in the browser.
+| Tool | Role |
+|---|---|
+| **React 18** | Renders and updates badges, chips, and stats inside YouTube's DOM via portals |
+| **TypeScript** | Full type-safety across the codebase |
+| **Vite** | Development build and production bundling |
+| **Chrome MV3** | Extension runtime (Manifest V3) |
+| **chrome.storage.local** | Local-only progress persistence |
+
+---
 
 ## Development
 
-You need Node.js and npm installed before starting.
-
-Clone the repository, open its folder in a terminal, and install the dependencies:
-
 ```bash
+# Install dependencies
 npm install
-```
 
-Run development mode to rebuild the extension when source files change:
-
-```bash
+# Watch mode — rebuilds on save
 npm run dev
-```
 
-The development command creates the extension files in `dist`. To test them:
+# Type-check only
+npm run typecheck
 
-1. Open `chrome://extensions`.
-2. Enable **Developer mode**.
-3. Click **Load unpacked**.
-4. Select the project's `dist` folder.
-5. Reload the extension after each rebuild.
-
-Create a production build:
-
-```bash
+# Production build → dist/
 npm run build
 ```
 
-Run TypeScript checks without building:
+After each rebuild, go to `chrome://extensions` → Progress-Tube → **↺ Reload** to apply changes.
 
-```bash
-npm run typecheck
-```
+---
 
 ## Project Structure
 
-```text
+```
 src/
-├── content/
 ├── components/
+│   ├── PlaylistStats.tsx   # Filter chips + live stats header
+│   ├── StatusToggle.tsx    # SVG icon badge button (Completed / Important / Revisit)
+│   └── VideoControls.tsx   # Mounts three badges per video row
+├── content/
+│   ├── ContentApp.tsx      # Root React component (portal host)
+│   ├── index.tsx           # Extension entry point
+│   └── portalRegistry.ts   # Tracks mount targets for React portals
 ├── hooks/
-├── storage/
+│   ├── usePlaylistState.ts # Reactive playlist data from storage
+│   └── useVideoState.ts    # Reactive per-video data + update helper
 ├── observers/
-├── youtube/
-├── utils/
+│   ├── NavigationObserver.ts    # Detects YouTube SPA navigation
+│   ├── PlaylistObserver.ts      # Watches for new playlist rows in the DOM
+│   └── VideoElementObserver.ts  # Tracks playback progress for auto-complete
+├── storage/
+│   ├── ChromeStorageService.ts  # Read/write via chrome.storage.local
+│   ├── StorageService.ts        # Interface definition
+│   └── storageKeys.ts           # Storage key helpers
+├── styles/
+│   └── content.css   # All extension styling (native YouTube design language)
 ├── types/
-└── styles/
+│   ├── state.ts      # VideoState, PlaylistState, VideoStatePatch
+│   └── youtube.ts    # PortalTarget type
+├── utils/
+│   └── logger.ts
+└── youtube/
+    ├── mountPoints.ts       # Creates / locates DOM mount elements per row
+    ├── playlistItems.ts     # Finds ytd-playlist-video-renderer elements
+    ├── playlistMetadata.ts  # Scrapes declared playlist total from the page
+    ├── selectors.ts         # Centralised YouTube CSS selectors
+    └── url.ts               # Playlist ID and video ID URL helpers
 ```
 
-- `content/` starts the extension on YouTube pages and manages the React integration.
-- `components/` contains the playlist controls and statistics UI.
-- `hooks/` connects React components to playlist and video state.
-- `storage/` reads and writes progress data using `chrome.storage.local`.
-- `observers/` handles YouTube navigation, page updates, and video playback changes.
-- `youtube/` contains YouTube URL, playlist, selector, and mount-point helpers.
-- `utils/` contains small shared utilities.
-- `types/` contains shared TypeScript data definitions.
-- `styles/` contains the extension's YouTube integration styles.
+---
 
 ## Permissions
 
-Progress-Tube requests only the permissions needed for its core features:
+| Permission | Reason |
+|---|---|
+| `storage` | Saves video statuses and watch progress locally |
+| `https://www.youtube.com/*` | Injects badges, chips, and stats into YouTube playlist pages |
 
-- **Storage:** Saves playlist progress and video statuses locally using `chrome.storage.local`.
-- **Access to `https://www.youtube.com/*`:** Allows the extension to add controls, show statistics, and track watch progress on YouTube pages.
+No other permissions are requested.
 
-The extension does not request access to other websites.
+---
 
 ## Limitations
 
-- Progress tracking works on YouTube playlist pages and playlist watch pages.
-- A Chrome-compatible browser with Manifest V3 extension support is required.
-- Progress data is stored locally in the current browser profile.
-- Progress data does not sync across devices or browser profiles.
+- Works on YouTube playlist pages (`?list=...`) and playlist watch pages.
+- Requires a Chromium-based browser with Manifest V3 support.
+- Progress data is local to the current browser profile and does not sync across devices.
+
+---
 
 ## Contributing
 
-Contributions are welcome. Before submitting a change:
+Contributions are welcome.
 
-1. Create a focused branch.
+1. Fork the repo and create a focused branch.
 2. Keep changes within the existing project structure.
-3. Run `npm run typecheck`.
-4. Run `npm run build`.
-5. Open a pull request that clearly explains the change.
+3. Run `npm run typecheck` and `npm run build` before submitting.
+4. Open a pull request with a clear description of the change.
 
-For larger changes, open an issue first to discuss the approach.
+For larger changes please open an issue first to discuss the approach.
+
+---
 
 ## License
 
-License not yet finalized. Add the selected license and update this section before publishing a release.
+License not yet finalised. Update this section before publishing a release.
