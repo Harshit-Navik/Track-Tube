@@ -1,8 +1,8 @@
-# Progress-Tube
+# Track-Tube
 
 > Track learning progress across YouTube playlists — designed to feel like a native YouTube feature.
 
-Progress-Tube is a Chrome extension that integrates seamlessly into YouTube's playlist UI. It lets you mark videos as **Completed**, **Important**, or **Revisit**, filter your playlist by those states, and see live progress counts — all without disrupting YouTube's look and feel.
+Track-Tube is a Chrome extension that integrates seamlessly into YouTube's playlist UI. It lets you mark videos as **Completed**, **Important**, or **Revisit**, filter your playlist by those states, and see live progress counts — all without disrupting YouTube's look and feel.
 
 ---
 
