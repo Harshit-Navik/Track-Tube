@@ -19,26 +19,24 @@ This extension is not published on the Chrome Web Store. Install it manually fro
 
 ## Installation
 
-### Method 1: Install from ZIP Release (Recommended)
+### Chrome / Edge / Chromium
 
-**[⬇️ Download Latest Release ZIP](./releases/track-tube.zip)**
+1. Download [track-tube.zip](./releases/track-tube.zip)
+2. Go to `chrome://extensions` and enable **Developer mode**
+3. Drag and drop the zip onto the page
 
-1. Download the ZIP file using the link above.
-2. Extract the ZIP file to a folder on your computer.
-3. Open Chrome and go to:
+**Alternative Installation Method:**
 
-   ```text
-   chrome://extensions
-   ```
+If drag and drop doesn't work:
 
-4. Enable **Developer mode** in the top-right corner.
-5. Click **Load unpacked**.
-6. Select the extracted extension folder.
-7. Open a YouTube playlist. The extension is now installed.
+1. Extract the ZIP file to a folder on your computer
+2. Go to `chrome://extensions` and enable **Developer mode**
+3. Click **Load unpacked**
+4. Select the extracted extension folder
 
-Keep the extracted folder in place. Chrome loads the extension from that folder.
+---
 
-### Method 2: Install from Source
+### Build from Source
 
 Use this method if you want to build the extension yourself or contribute to development.
 
