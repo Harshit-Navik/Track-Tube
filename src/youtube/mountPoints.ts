@@ -1,9 +1,11 @@
 import type { PortalTarget } from "../types/youtube";
 import { getDeclaredPlaylistTotal } from "./playlistMetadata";
 import { YOUTUBE_SELECTORS } from "./selectors";
-import { getPlaylistItemVideoId } from "./playlistItems";
+import { getPlaylistItemIndex, getPlaylistItemVideoId } from "./playlistItems";
 
 const MOUNT_CLASS = "progress-tube-mount";
+const ROW_ID_DATASET_KEY = "progressTubeRowId";
+let nextRowId = 0;
 
 export const ensureVideoMount = (item: Element, playlistId: string): PortalTarget | null => {
   const videoId = getPlaylistItemVideoId(item);
@@ -17,12 +19,20 @@ export const ensureVideoMount = (item: Element, playlistId: string): PortalTarge
   element.dataset.progressTubeKind = "video";
   element.dataset.progressTubeVideoId = videoId;
   element.dataset.progressTubePlaylistId = playlistId;
+  const itemIndex = getPlaylistItemIndex(item);
+  const rowId =
+    itemIndex ??
+    item.dataset[ROW_ID_DATASET_KEY] ??
+    String((nextRowId += 1));
+  item.dataset[ROW_ID_DATASET_KEY] = rowId;
+  if (itemIndex) element.dataset.progressTubeItemIndex = itemIndex;
+  else delete element.dataset.progressTubeItemIndex;
   if (!existing) {
     item.append(element);
   }
 
   return {
-    key: `video:${playlistId}:${videoId}`,
+    key: `video:${playlistId}:${rowId}:${videoId}`,
     kind: "video",
     element,
     rowElement: item,

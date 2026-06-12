@@ -105,9 +105,11 @@ export class ChromeStorageService implements StorageService {
       return nextPlaylist;
     });
 
-    const queued = operation.finally(() => {
-      if (this.queues.get(playlistId) === queued) this.queues.delete(playlistId);
-    });
+    const queued = operation
+      .catch(() => undefined)
+      .finally(() => {
+        if (this.queues.get(playlistId) === queued) this.queues.delete(playlistId);
+      });
     this.queues.set(playlistId, queued);
     return operation;
   }
@@ -126,6 +128,7 @@ export class ChromeStorageService implements StorageService {
     chrome.storage.onChanged.removeListener(this.handleStorageChange);
     this.listeners.clear();
     this.cache.clear();
+    this.queues.clear();
     this.hydrationPromises.clear();
   }
 

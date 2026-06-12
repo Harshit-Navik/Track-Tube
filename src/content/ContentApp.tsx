@@ -22,23 +22,27 @@ export const ContentApp = (): React.JSX.Element => {
           );
         }
 
-        const videoIds = targets
-          .filter(
-            (candidate) =>
-              candidate.kind === "video" &&
-              candidate.playlistId === target.playlistId &&
-              candidate.videoId,
-          )
-          .map((candidate) => candidate.videoId as string);
-        return createPortal(
-          <PlaylistStats
-            playlistId={target.playlistId}
-            discoveredVideoIds={videoIds}
-            {...(target.totalVideos === undefined ? {} : { declaredTotal: target.totalVideos })}
-          />,
-          target.element,
-          target.key,
-        );
+        if (target.kind === "stats") {
+          const videoIds = targets
+            .filter(
+              (candidate) =>
+                candidate.kind === "video" &&
+                candidate.playlistId === target.playlistId &&
+                candidate.videoId,
+            )
+            .map((candidate) => candidate.videoId as string);
+          return createPortal(
+            <PlaylistStats
+              playlistId={target.playlistId}
+              discoveredVideoIds={videoIds}
+              {...(target.totalVideos === undefined ? {} : { declaredTotal: target.totalVideos })}
+            />,
+            target.element,
+            target.key,
+          );
+        }
+
+        return null;
       })}
     </>
   );

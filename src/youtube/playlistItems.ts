@@ -15,3 +15,13 @@ export const getPlaylistItemVideoId = (item: Element): string | null => {
   const link = item.querySelector<HTMLAnchorElement>(YOUTUBE_SELECTORS.playlistItemLink);
   return link ? getVideoId(link.href) : null;
 };
+
+export const getPlaylistItemIndex = (item: Element): string | null => {
+  const link = item.querySelector<HTMLAnchorElement>(YOUTUBE_SELECTORS.playlistItemLink);
+  if (!link) return null;
+  try {
+    return new URL(link.href, window.location.origin).searchParams.get("index");
+  } catch {
+    return null;
+  }
+};

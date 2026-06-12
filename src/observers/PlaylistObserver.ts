@@ -5,6 +5,7 @@ import { ensureStatsMount, ensureVideoMount } from "../youtube/mountPoints";
 export class PlaylistObserver {
   private observer: MutationObserver | null = null;
   private scheduled = false;
+  private animationFrameId: number | null = null;
   private readonly pendingRoots = new Set<ParentNode>();
 
   constructor(private readonly playlistId: string) {}
@@ -25,6 +26,10 @@ export class PlaylistObserver {
   stop(): void {
     this.observer?.disconnect();
     this.observer = null;
+    if (this.animationFrameId !== null) {
+      window.cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
     this.pendingRoots.clear();
     this.scheduled = false;
   }
@@ -32,7 +37,8 @@ export class PlaylistObserver {
   private scheduleProcessing(): void {
     if (this.scheduled) return;
     this.scheduled = true;
-    window.requestAnimationFrame(() => {
+    this.animationFrameId = window.requestAnimationFrame(() => {
+      this.animationFrameId = null;
       this.scheduled = false;
       for (const root of this.pendingRoots) this.processRoot(root);
       this.pendingRoots.clear();
