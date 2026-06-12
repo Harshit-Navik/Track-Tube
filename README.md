@@ -21,7 +21,9 @@ This extension is not published on the Chrome Web Store. Install it manually fro
 
 ### Method 1: Install from ZIP Release (Recommended)
 
-1. Download the latest ZIP file from the repository's **Releases** section.
+**[⬇️ Download Latest Release ZIP](./releases/track-tube.zip)**
+
+1. Download the ZIP file using the link above.
 2. Extract the ZIP file to a folder on your computer.
 3. Open Chrome and go to:
 
