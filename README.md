@@ -21,7 +21,7 @@ This extension is not published on the Chrome Web Store. Install it manually fro
 
 ### Chrome / Edge / Chromium
 
-1. Download [track-tube.zip](./releases/track-tube.zip)
+1. Download [track-tube.zip](https://raw.githubusercontent.com/Harshit-Navik/Track-Tube/main/releases/track-tube.zip)
 2. Go to `chrome://extensions` and enable **Developer mode**
 3. Drag and drop the zip onto the page
 
